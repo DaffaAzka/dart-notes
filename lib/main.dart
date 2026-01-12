@@ -1,7 +1,5 @@
 import 'package:dstnotes/constants/routes.dart';
 import 'package:dstnotes/services/local_notes_service.dart';
-import 'package:dstnotes/views/notes/create_update_view.dart';
-import 'package:dstnotes/views/notes/notes_view.dart';
 import 'package:dstnotes/views/todos/create_update_todo_view.dart';
 import 'package:dstnotes/views/todos/todos_view.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Dst Notes',
+      title: 'Dst Todo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -36,8 +34,6 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       home: const Homepage(),
       routes: {
-        notesRoute: (context) => const NotesView(),
-        createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
         todosRoute: (context) => const TodosView(),
         createOrUpdateTodoRoute: (context) => const CreateUpdateTodoView(),
       },
@@ -53,7 +49,6 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  int _currentIndex = 0;
   bool _isLoading = true;
 
   @override
@@ -79,34 +74,6 @@ class _HomepageState extends State<Homepage> {
       );
     }
 
-    return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: const [
-          NotesView(),
-          TodosView(),
-        ],
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.note_alt_outlined),
-            selectedIcon: Icon(Icons.note_alt),
-            label: 'Notes',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.checklist_outlined),
-            selectedIcon: Icon(Icons.checklist),
-            label: 'To-Do',
-          ),
-        ],
-      ),
-    );
+    return const TodosView();
   }
 }
